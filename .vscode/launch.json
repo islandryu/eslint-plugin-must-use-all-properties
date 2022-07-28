@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "protocol": "inspector",
+      "request": "launch",
+      "name": "jest test",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest",
+      "args": [
+        "${fileBasenameNoExtension}",
+      ],
+      "env": {
+        "NODE_ENV": "testing"
+      },
+      "sourceMaps": true,
+      "smartStep": true,
+    }
+  ]
+}
