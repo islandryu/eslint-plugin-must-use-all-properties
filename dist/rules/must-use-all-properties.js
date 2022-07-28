@@ -3,13 +3,20 @@ exports.__esModule = true;
 exports.rule = void 0;
 var utils_1 = require("@typescript-eslint/utils");
 var createRule = utils_1.ESLintUtils.RuleCreator(function (name) { return "https://example.com/rule/".concat(name); });
+var ENABLE_COMMENT = "must-use-all-properties";
 exports.rule = createRule({
     create: function (context) {
         return {
             ObjectPattern: function (node) {
+                var sourceCord = context.getSourceCode();
+                var comments = sourceCord.getAllComments();
+                if (!comments.find(function (comment) {
+                    return comment.value.includes(ENABLE_COMMENT) &&
+                        comment.loc.end.line === node.loc.start.line - 1;
+                }))
+                    return;
                 var parserServices = utils_1.ESLintUtils.getParserServices(context);
                 var checker = parserServices.program.getTypeChecker();
-                // let objectPropertyNames: string[] | undefined;
                 var originObj = parserServices.esTreeNodeToTSNodeMap.get(node);
                 var objType = checker.getTypeAtLocation(originObj);
                 var objectPropertyNames = getObjectPropertyNames(objType);
@@ -19,7 +26,6 @@ exports.rule = createRule({
                 var missingProperties = objectPropertyNames.filter(function (propertyName) { return !objectPatternPropertyNames.includes(propertyName); });
                 if (!missingProperties.length)
                     return;
-                var sourceCord = context.getSourceCode();
                 var typeAnnotation = node.typeAnnotation
                     ? sourceCord.getText(node.typeAnnotation)
                     : "";
@@ -36,7 +42,7 @@ exports.rule = createRule({
     name: "must-use-all-properties",
     meta: {
         docs: {
-            description: "Function declaration names should start with an upper-case letter.",
+            description: "Detect unused properties.",
             recommended: false
         },
         messages: {

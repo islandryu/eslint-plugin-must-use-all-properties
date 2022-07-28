@@ -43,55 +43,33 @@ var ruleTester = new RuleTester({
 });
 ruleTester.run("must-use-all-properties", must_use_all_properties_1.rule, {
     valid: [
-    //     {
-    //       code: `
-    // const data = {name: "hoge", rank: 1};
-    // const {name, rank} = data;
-    //         `,
-    //     },
-    //     {
-    //       code: `
-    // const Component = (
-    //   {name,rank} : {name: string, rank: number}
-    // ) => {
-    // }
-    //         `,
-    //     },
-    //     {
-    //       code: `
-    // type Props = {name: string, rank: number};
-    // const Component = (
-    //   {name, rank} : Props
-    // ) => {
-    // }
-    //         `,
-    //     },
+        {
+            code: "\nconst data = {name: \"hoge\", rank: 1};\n// must-use-all-properties\nconst {name, rank} = data;\n            "
+        },
+        {
+            code: "\nconst data = {name: \"hoge\", rank: 1};\nconst {name} = data;\n            "
+        },
+        {
+            code: "\nconst Component = (\n// must-use-all-properties\n  {name,rank} : {name: string, rank: number}\n) => {\n}\n            "
+        },
+        {
+            code: "\ntype Props = {name: string, rank: number};\nconst Component = (\n// must-use-all-properties\n  {name, rank} : Props\n) => {\n}\n            "
+        },
     ],
     invalid: [
         {
-            code: "\nconst data = {name: \"hoge\", rank: 1};\nconst {name} = data;\n      ",
+            code: "\nconst data = {name: \"hoge\", rank: 1};\n// must-use-all-properties\nconst {name} = data;\n      ",
             errors: [
                 {
                     messageId: "missingProperty",
-                    line: 3,
+                    line: 4,
                     column: 7
                 },
             ],
-            output: (0, eslint_utils_1.noFormat)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nconst data = {name: \"hoge\", rank: 1};\nconst {name,rank} = data;\n      "], ["\nconst data = {name: \"hoge\", rank: 1};\nconst {name,rank} = data;\n      "])))
+            output: (0, eslint_utils_1.noFormat)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\nconst data = {name: \"hoge\", rank: 1};\n// must-use-all-properties\nconst {name,rank} = data;\n      "], ["\nconst data = {name: \"hoge\", rank: 1};\n// must-use-all-properties\nconst {name,rank} = data;\n      "])))
         },
         {
-            code: "\nconst Component = (\n  {name} : {name: string, rank: number}\n) => {\n}\n      ",
-            errors: [
-                {
-                    messageId: "missingProperty",
-                    line: 3,
-                    column: 3
-                },
-            ],
-            output: (0, eslint_utils_1.noFormat)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\nconst Component = (\n  {name,rank} : {name: string, rank: number}\n) => {\n}\n      "], ["\nconst Component = (\n  {name,rank} : {name: string, rank: number}\n) => {\n}\n      "])))
-        },
-        {
-            code: "\ntype Props = {name: string, rank: number};\nconst Component = (\n  {name} : Props\n) => {\n}\n      ",
+            code: "\nconst Component = (\n// must-use-all-properties\n  {name} : {name: string, rank: number}\n) => {\n}\n      ",
             errors: [
                 {
                     messageId: "missingProperty",
@@ -99,7 +77,18 @@ ruleTester.run("must-use-all-properties", must_use_all_properties_1.rule, {
                     column: 3
                 },
             ],
-            output: (0, eslint_utils_1.noFormat)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\ntype Props = {name: string, rank: number};\nconst Component = (\n  {name,rank} : Props\n) => {\n}\n      "], ["\ntype Props = {name: string, rank: number};\nconst Component = (\n  {name,rank} : Props\n) => {\n}\n      "])))
+            output: (0, eslint_utils_1.noFormat)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\nconst Component = (\n// must-use-all-properties\n  {name,rank} : {name: string, rank: number}\n) => {\n}\n      "], ["\nconst Component = (\n// must-use-all-properties\n  {name,rank} : {name: string, rank: number}\n) => {\n}\n      "])))
+        },
+        {
+            code: "\ntype Props = {name: string, rank: number};\nconst Component = (\n// must-use-all-properties\n  {name} : Props\n) => {\n}\n      ",
+            errors: [
+                {
+                    messageId: "missingProperty",
+                    line: 5,
+                    column: 3
+                },
+            ],
+            output: (0, eslint_utils_1.noFormat)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\ntype Props = {name: string, rank: number};\nconst Component = (\n// must-use-all-properties\n  {name,rank} : Props\n) => {\n}\n      "], ["\ntype Props = {name: string, rank: number};\nconst Component = (\n// must-use-all-properties\n  {name,rank} : Props\n) => {\n}\n      "])))
         },
     ]
 });
