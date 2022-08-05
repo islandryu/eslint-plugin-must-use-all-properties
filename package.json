@@ -21,7 +21,7 @@
   "author": "islandryu",
   "repository": {
     "type": "git",
-    "url": "https://github.com/uhyo/eslint-plugin-import-access"
+    "url": "https://github.com/islandryu/eslint-plugin-must-use-all-properties"
   },
   "license": "MIT",
   "dependencies": {

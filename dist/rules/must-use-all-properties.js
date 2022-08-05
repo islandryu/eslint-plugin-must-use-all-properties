@@ -1,4 +1,13 @@
 "use strict";
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 exports.__esModule = true;
 exports.rule = void 0;
 var utils_1 = require("@typescript-eslint/utils");
@@ -33,7 +42,7 @@ exports.rule = createRule({
                     node: node,
                     messageId: "missingProperty",
                     fix: function (fixer) {
-                        return fixer.replaceText(node, "{".concat(objectPropertyNames.map(function (key) { return key; }), "}").concat(typeAnnotation && " " + typeAnnotation));
+                        return fixer.replaceText(node, "{".concat(__spreadArray(__spreadArray([], objectPatternPropertyNames, true), missingProperties, true).map(function (key) { return key; }), "}").concat(typeAnnotation && " " + typeAnnotation));
                     }
                 });
             }

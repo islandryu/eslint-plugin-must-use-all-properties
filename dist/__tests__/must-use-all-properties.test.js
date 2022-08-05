@@ -90,6 +90,17 @@ ruleTester.run("must-use-all-properties", must_use_all_properties_1.rule, {
             ],
             output: (0, eslint_utils_1.noFormat)(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\ntype Props = {name: string, rank: number};\nconst Component = (\n// must-use-all-properties\n  {name,rank} : Props\n) => {\n}\n      "], ["\ntype Props = {name: string, rank: number};\nconst Component = (\n// must-use-all-properties\n  {name,rank} : Props\n) => {\n}\n      "])))
         },
+        {
+            code: "\nconst data = {name: \"hoge\", type: \"type\",rank: 1};\n// must-use-all-properties\nconst {name, rank} = data;\n      ",
+            errors: [
+                {
+                    messageId: "missingProperty",
+                    line: 4,
+                    column: 7
+                },
+            ],
+            output: (0, eslint_utils_1.noFormat)(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\nconst data = {name: \"hoge\", type: \"type\",rank: 1};\n// must-use-all-properties\nconst {name,rank,type} = data;\n      "], ["\nconst data = {name: \"hoge\", type: \"type\",rank: 1};\n// must-use-all-properties\nconst {name,rank,type} = data;\n      "])))
+        },
     ]
 });
-var templateObject_1, templateObject_2, templateObject_3;
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
