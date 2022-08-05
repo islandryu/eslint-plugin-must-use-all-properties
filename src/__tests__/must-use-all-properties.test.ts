@@ -118,5 +118,24 @@ const Component = (
 }
       `,
     },
+    {
+      code: `
+const data = {name: "hoge", type: "type",rank: 1};
+// must-use-all-properties
+const {name, rank} = data;
+      `,
+      errors: [
+        {
+          messageId: "missingProperty",
+          line: 4,
+          column: 7,
+        },
+      ],
+      output: noFormat`
+const data = {name: "hoge", type: "type",rank: 1};
+// must-use-all-properties
+const {name,rank,type} = data;
+      `,
+    },
   ],
 });

@@ -48,9 +48,9 @@ export const rule = createRule({
           fix: (fixer) =>
             fixer.replaceText(
               node,
-              `{${objectPropertyNames.map((key) => key)}}${
-                typeAnnotation && " " + typeAnnotation
-              }`
+              `{${[...objectPatternPropertyNames, ...missingProperties].map(
+                (key) => key
+              )}}${typeAnnotation && " " + typeAnnotation}`
             ),
         });
       },
